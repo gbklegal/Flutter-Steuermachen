@@ -10,4 +10,10 @@ class AuthenticationProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void logout() {
+    _authenticated = false;
+
+    notifyListeners();
+  }
 }
