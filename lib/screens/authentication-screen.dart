@@ -20,6 +20,8 @@ class AuthenticationState extends State<AuthenticationScreen> {
       'email': _email,
       'password': _password,
     });
+
+    Navigator.pop(context);
   }
 
   @override
