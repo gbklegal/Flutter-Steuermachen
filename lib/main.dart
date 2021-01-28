@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:steuermachen/providers/authentication-provider.dart';
 import 'package:steuermachen/widget/nav-drawer.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (_) => AuthenticationProvider(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -36,7 +39,15 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       drawer: NavDrawer(),
       body: Center(
-        child: Text("You are not signed in."),
+        child: Consumer<AuthenticationProvider>(
+          builder: (contect, auth, child) {
+            if (auth.authenticated) {
+              return Text("You are signed in.");
+            } else {
+              return Text("You are not signed in yet.");
+            }
+          },
+        ),
       ),
     );
   }

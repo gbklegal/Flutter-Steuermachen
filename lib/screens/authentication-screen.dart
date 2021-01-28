@@ -1,6 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:steuermachen/providers/authentication-provider.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   @override
@@ -15,8 +15,11 @@ class AuthenticationState extends State<AuthenticationScreen> {
   String _password;
 
   void submit() {
-    log(_email);
-    log(_password);
+    Provider.of<AuthenticationProvider>(context, listen: false)
+        .attempt(credentials: {
+      'email': _email,
+      'password': _password,
+    });
   }
 
   @override
