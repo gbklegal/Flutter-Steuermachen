@@ -11,7 +11,9 @@ class NavDrawer extends StatelessWidget {
         if (auth.authenticated) {
           return ListView(
             children: [
-              ListTile(title: Text("Maximilian Schieder")),
+              ListTile(
+                title: Text(auth.user.name),
+              ),
               ListTile(
                 title: Text("Logout"),
                 onTap: () {

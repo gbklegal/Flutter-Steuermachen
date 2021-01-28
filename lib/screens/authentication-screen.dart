@@ -16,7 +16,7 @@ class AuthenticationState extends State<AuthenticationScreen> {
 
   void submit() {
     Provider.of<AuthenticationProvider>(context, listen: false)
-        .attempt(credentials: {
+        .login(credentials: {
       'email': _email,
       'password': _password,
     });
