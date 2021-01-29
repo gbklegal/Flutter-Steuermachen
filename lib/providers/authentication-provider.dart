@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 import 'package:steuermachen/dio.dart';
 import 'package:steuermachen/models/user.dart';
 
@@ -13,8 +14,9 @@ class AuthenticationProvider extends ChangeNotifier {
   User get user => _user;
 
   Future login({Map credentials}) async {
-    Dio.Response response =
-        await dio().post('auth/token', data: jsonEncode(credentials));
+    String deviceId = await getDeviceID();
+    Dio.Response response = await dio().post('auth/token',
+        data: jsonEncode(credentials..addAll({'deviceId': deviceId})));
 
     String token = jsonDecode(response.toString())['token'];
 
@@ -36,6 +38,18 @@ class AuthenticationProvider extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  Future getDeviceID() async {
+    String deviceId;
+
+    try {
+      deviceId = await PlatformDeviceId.getDeviceId;
+    } catch (exception) {
+      // ToDo
+    }
+
+    return deviceId;
   }
 
   void logout() {
